@@ -5,7 +5,7 @@ import utilidades.Util;
 import java.util.ArrayList;
 
 public class Paciente {
-    int id = id;
+    int id;
     String nome;
     String cpf;
     String email;

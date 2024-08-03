@@ -1,28 +1,57 @@
 import entidades.Consulta;
 import entidades.Medico;
 import entidades.Paciente;
+import utilidades.Util;
 
 import java.util.ArrayList;
 
 public class Principal {
     public static void main(String[] args) {
-        Principal principal = new Principal();
         ArrayList<Consulta> consultas = new ArrayList<>();
-
-        var paciente = new Paciente();
-        paciente.autenticarPaciente(principal.inicializaPacientes(), consultas, principal.inicializaMedicos());
+        Principal principal = new Principal();
+        Paciente paciente = new Paciente();
+        Medico medico = new Medico();
+        principal.direcionaOpçoes(paciente.inicializaPacientes(), consultas, medico.inicializaMedicos());
     }
 
-    private ArrayList<Paciente> inicializaPacientes() {
-        ArrayList<Paciente> pacientes = new ArrayList<>();
-        pacientes.add(new Paciente(1, "Elena Toledo", "456.896.123-89", "elenatoledo@gmail.com", "(51) 5453-4562", null));
-        pacientes.add(new Paciente(2, "Oscar Bastos", "123.875.133-86", "oscarbastos@gmail.com", "(49) 4933-6759", null));
-        pacientes.add(new Paciente(3, "Edite Castro", "545.453.321-90", "editecastro@gmail.com", "(50) 5098-6242", null));
-        return pacientes;
+    private int direcionaOpçoes(ArrayList<Paciente> pacientes, ArrayList<Consulta> consultas, ArrayList<Medico> medicos) {
+        Util util = new Util();
+        Paciente paciente = new Paciente();
+        Consulta consulta = new Consulta();
+        int opcao = 0;
+
+        do {
+            opcao = ofertaOpcoesNoConsole();
+
+            switch (opcao) {
+                case 1 -> {
+                    paciente.autenticarPaciente(pacientes, consultas, medicos);
+                }
+                case 2 -> {
+                    consulta.listarConsultasPorPaciente(consultas);
+                }
+                case 3 -> {
+                    consulta.listarConsultasPorMedico(consultas);
+                }
+                case 4 -> {
+                    util.println("Até mais!\n");
+                    System.exit(0);
+                }
+                default -> {
+                    util.println("Opção indisponível.\n");
+                }
+            }
+        } while (opcao != 0);
+        return opcao;
     }
 
-    private ArrayList<Medico> inicializaMedicos() {
-        ArrayList<Medico> medicos = new ArrayList<>();
-        return medicos;
+    private int ofertaOpcoesNoConsole() {
+        Util util = new Util();
+        util.println("Qual sua escolha ");
+        System.out.println(" 1 - Marcar consulta:\n" +
+                " 2 - Listar consultas por paciente:\n" +
+                " 3 - Listar consultas por medico:\n" +
+                " 4 - Sair\n");
+        return util.sc.nextInt();
     }
 }
